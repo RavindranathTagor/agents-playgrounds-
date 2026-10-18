@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f3">
+  <title>Task Tracker · MOVA</title>
+  <style>
+    :root{--bg:#f6f7f3;--surface:#fff;--ink:#1d2b24;--muted:#87928a;--line:#e8ebe4;--green:#254638;--lime:#d8f36d;--soft:#edf4df;--shadow:0 12px 35px #24382c0a}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans','Avenir Next','Segoe UI',sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}.wrap{max-width:1120px;margin:auto;padding:0 28px}
+    header{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;font:800 21px Manrope,sans-serif;letter-spacing:-1px}.brand-icon{display:grid;place-items:center;width:32px;height:32px;background:var(--green);color:var(--lime);border-radius:10px;font-size:18px}.brand small{font:600 9px 'DM Sans',sans-serif;letter-spacing:1.5px;color:#93a097;margin-left:4px}.today{font-size:12px;color:#7f8b82}.main{padding:42px 0 70px}.welcome{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:27px}.kicker{font-size:10px;text-transform:uppercase;letter-spacing:1.6px;color:#819087;font-weight:700}.welcome h1{font:600 34px Manrope,sans-serif;letter-spacing:-1.6px;margin:10px 0 5px}.welcome h1 span{color:#94a197}.welcome p{margin:0;color:var(--muted);font-size:13px}.add-button,.primary{background:var(--green);color:white;border:0;border-radius:10px;padding:12px 17px;font-size:12px;font-weight:700;box-shadow:0 5px 12px #2347371c}.add-button:hover,.primary:hover{background:#315b48}.plus{font-size:17px;vertical-align:-1px;margin-right:6px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:25px}.stat{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px 20px;box-shadow:var(--shadow)}.stat-label{font-size:11px;color:var(--muted)}.stat-number{font:700 26px Manrope;letter-spacing:-1px;margin-top:8px}.stat-foot{font-size:10px;color:#97a198;margin-top:2px}.stat.highlight{background:#eaf2dc;border-color:#eaf2dc}.stat.highlight .stat-number{color:#496332}
+    .content{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}.list-panel,.form-panel{background:var(--surface);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}.list-panel{padding:21px 23px;min-height:350px}.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.panel-head h2{font:700 15px Manrope;margin:0;letter-spacing:-.3px}.tabs{display:flex;gap:5px;padding:4px;background:#f5f6f2;border-radius:9px}.filter{background:transparent;color:#829087;border:0;padding:7px 10px;border-radius:7px;font-size:10px;font-weight:600}.filter.active{background:white;color:var(--ink);box-shadow:0 1px 4px #15271b12}.task-list{display:grid;gap:9px}.task{display:grid;grid-template-columns:22px minmax(0,1fr) auto;align-items:start;gap:12px;padding:15px 13px;border:1px solid #edf0ea;border-radius:12px;transition:.18s}.task:hover{border-color:#dce5d4;transform:translateY(-1px)}.check{width:19px;height:19px;border:1.5px solid #c8d0c8;border-radius:6px;background:white;color:white;display:grid;place-items:center;font-size:11px;margin-top:1px}.task.done .check{background:#78945a;border-color:#78945a}.task-title{font-size:12px;font-weight:700;line-height:1.45}.task.done .task-title{text-decoration:line-through;color:#98a29b}.task-description{font-size:10px;color:#8c978f;line-height:1.5;margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}.task-meta{font-size:9px;color:#a0aaa2;margin-top:9px}.task-actions{display:flex;gap:4px}.icon-button{background:transparent;border:0;color:#96a098;width:27px;height:27px;border-radius:7px;font-size:13px}.icon-button:hover{background:#f1f4ed;color:#344c3d}.empty{padding:57px 20px;text-align:center}.empty-icon{width:53px;height:53px;background:#f0f5e6;border-radius:17px;margin:0 auto 13px;display:grid;place-items:center;font-size:23px;color:#779150}.empty h3{font:700 13px Manrope;margin:0 0 5px}.empty p{color:#929c94;font-size:11px;margin:0}.error{margin:12px 0;padding:10px 12px;background:#fff0ee;border-radius:9px;color:#a64d42;font-size:11px;display:none}
+    .form-panel{padding:21px}.form-panel h2{font:700 14px Manrope;margin:0}.form-panel>p{font-size:11px;color:#8d9890;line-height:1.55;margin:6px 0 19px}.field{margin-bottom:14px}.field label{display:block;font-size:10px;font-weight:700;margin-bottom:6px;color:#58675e}.field input,.field textarea{display:block;width:100%;border:1px solid #e5e9e2;background:#fbfcfa;border-radius:9px;padding:10px 11px;font-size:11px;color:var(--ink);outline:none}.field input:focus,.field textarea:focus{border-color:#8ba777;box-shadow:0 0 0 3px #e9f1df}.field textarea{min-height:82px;resize:vertical}.field input::placeholder,.field textarea::placeholder{color:#b0b9b1}.form-panel .primary{width:100%;padding:11px}.form-note{font-size:9px;color:#a1aaa3;text-align:center;margin:11px 0 0}.loading{color:#89958c;font-size:11px;padding:30px 10px;text-align:center}
+    .modal-backdrop{position:fixed;inset:0;background:#17251f70;display:none;place-items:center;padding:18px;z-index:5}.modal-backdrop.open{display:grid}.modal{background:white;width:min(100%,440px);padding:23px;border-radius:17px;box-shadow:0 24px 80px #0003}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h2{font:700 16px Manrope;margin:0}.close{border:0;background:#f1f3ef;border-radius:8px;width:30px;height:30px;color:#68766d;font-size:18px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:17px}.secondary{background:#f1f3ef;border:0;padding:10px 14px;border-radius:9px;color:#647168;font-size:11px;font-weight:700}.modal .primary{padding:10px 15px;font-size:11px}
+    .toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,12px);opacity:0;background:#203b2e;color:#fff;border-radius:10px;padding:11px 16px;font-size:11px;box-shadow:0 8px 24px #1b2d2230;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+    @media(max-width:760px){.wrap{padding:0 16px}header{height:66px}.today{display:none}.main{padding-top:29px}.welcome{align-items:flex-start;gap:15px}.welcome h1{font-size:27px}.welcome p{max-width:270px;line-height:1.5}.add-button{padding:10px 12px;font-size:10px}.stats{gap:8px}.stat{padding:13px 12px}.stat-number{font-size:22px}.stat-label{font-size:9px}.content{grid-template-columns:1fr}.form-panel{order:-1}.form-panel>p{margin-bottom:13px}.field textarea{min-height:65px}.list-panel{padding:17px 14px}.filter{padding:7px 8px}.task{padding:13px 10px}}
+    @media(max-width:390px){.stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:span 2}.welcome h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><div class="brand"><span class="brand-icon">↗</span>mova<small>TASK SPACE</small></div><div class="today" id="today"></div></header>
+    <main class="main">
+      <section class="welcome"><div><div class="kicker">A little progress, every day</div><h1>Your tasks, <span>in motion.</span></h1><p>Keep the important things moving, one step at a time.</p></div><button class="add-button" id="focusAdd"><span class="plus">＋</span>New task</button></section>
+      <section class="stats" aria-label="Task summary">
+        <article class="stat"><div class="stat-label">All tasks</div><div class="stat-number" id="allCount">—</div><div class="stat-foot">Everything on your list</div></article>
+        <article class="stat"><div class="stat-label">Still in motion</div><div class="stat-number" id="pendingCount">—</div><div class="stat-foot">Ready for your next step</div></article>
+        <article class="stat highlight"><div class="stat-label">Completed</div><div class="stat-number" id="completeCount">—</div><div class="stat-foot">Small wins add up</div></article>
+      </section>
+      <section class="content">
+        <article class="list-panel">
+          <div class="panel-head"><h2>My tasks</h2><div class="tabs" role="group" aria-label="Filter tasks"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="pending">To do</button><button class="filter" data-filter="completed">Done</button></div></div>
+          <div id="error" class="error" role="alert"></div><div id="taskList" class="task-list"><div class="loading">Loading your tasks…</div></div>
+        </article>
+        <aside class="form-panel"><h2>Add a task</h2><p>Write it down and give it a place in your day.</p>
+          <form id="createForm"><div class="field"><label for="title">Task name</label><input id="title" name="title" maxlength="160" placeholder="What needs to get done?" required></div><div class="field"><label for="description">A few details <span style="font-weight:400;color:#a0aaa2">· optional</span></label><textarea id="description" name="description" placeholder="Add a note or next step…"></textarea></div><button class="primary" type="submit">Add to my list&nbsp; →</button></form><div class="form-note">Your tasks stay here while the server is running.</div>
+        </aside>
+      </section>
+    </main>
+  </div>
+  <div class="modal-backdrop" id="editBackdrop" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="editHeading"><div class="modal-head"><h2 id="editHeading">Edit task</h2><button class="close" id="closeEdit" aria-label="Close">×</button></div><form id="editForm"><input id="editId" type="hidden"><div class="field"><label for="editTitle">Task name</label><input id="editTitle" required maxlength="160"></div><div class="field"><label for="editDescription">Details</label><textarea id="editDescription"></textarea></div><div class="modal-actions"><button class="secondary" type="button" id="cancelEdit">Cancel</button><button class="primary" type="submit">Save changes</button></div></form></section></div>
+  <div class="toast" id="toast" role="status"></div>
+  <script>
+    const taskList = document.querySelector('#taskList');
+    const errorBox = document.querySelector('#error');
+    const toast = document.querySelector('#toast');
+    let tasks = [];
+    let activeFilter = 'all';
+    let toastTimer;
+
+    document.querySelector('#today').textContent = new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'long', day: 'numeric' }).format(new Date());
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+    const showToast = (message) => {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+    };
+    const showError = (message = '') => {
+      errorBox.textContent = message;
+      errorBox.style.display = message ? 'block' : 'none';
+    };
+    async function api(url, options = {}) {
+      const response = await fetch(url, { ...options, headers: { ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...options.headers } });
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(body.error || `Request failed (${response.status})`);
+      }
+      return response.status === 204 ? null : response.json();
+    }
+    function renderTasks() {
+      document.querySelector('#allCount').textContent = tasks.length;
+      document.querySelector('#pendingCount').textContent = tasks.filter((task) => task.status === 'pending').length;
+      document.querySelector('#completeCount').textContent = tasks.filter((task) => task.status === 'completed').length;
+      const visibleTasks = tasks.filter((task) => activeFilter === 'all' || task.status === activeFilter);
+      if (!visibleTasks.length) {
+        const isEmpty = tasks.length === 0;
+        taskList.innerHTML = `<div class="empty"><div class="empty-icon">${isEmpty ? '✳' : '⌕'}</div><h3>${isEmpty ? 'A fresh start.' : 'Nothing in this view.'}</h3><p>${isEmpty ? 'Add a task and your list will take shape here.' : 'Try another filter to see your tasks.'}</p></div>`;
+        return;
+      }
+      taskList.innerHTML = visibleTasks.map((task) => {
+        const completed = task.status === 'completed';
+        const date = new Date(task.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        return `<article class="task ${completed ? 'done' : ''}" data-id="${task.id}">
+          <button class="check" data-action="complete" aria-label="${completed ? 'Task completed' : 'Mark task complete'}" ${completed ? 'disabled' : ''}>${completed ? '✓' : ''}</button>
+          <div><div class="task-title">${escapeHtml(task.title)}</div>${task.description ? `<div class="task-description">${escapeHtml(task.description)}</div>` : ''}<div class="task-meta">${completed ? 'Completed' : 'Added'} · ${escapeHtml(date)}</div></div>
+          <div class="task-actions"><button class="icon-button" data-action="edit" aria-label="Edit ${escapeHtml(task.title)}" title="Edit">✎</button><button class="icon-button" data-action="delete" aria-label="Delete ${escapeHtml(task.title)}" title="Delete">⌫</button></div>
+        </article>`;
+      }).join('');
+    }
+    async function loadTasks() {
+      showError();
+      try {
+        tasks = await api('/tasks');
+        renderTasks();
+      } catch (error) {
+        taskList.innerHTML = '<div class="empty"><div class="empty-icon">!</div><h3>Could not load tasks.</h3><p>Check that the Task Tracker server is running, then try again.</p></div>';
+        showError(error.message);
+      }
+    }
+    const createForm = document.querySelector('#createForm');
+    createForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const form = new FormData(createForm);
+      try {
+        await api('/tasks', { method: 'POST', body: JSON.stringify({ title: form.get('title'), description: form.get('description') }) });
+        createForm.reset();
+        await loadTasks();
+        showToast('Task added to your list');
+      } catch (error) { showError(error.message); }
+    });
+    document.querySelector('#focusAdd').addEventListener('click', () => document.querySelector('#title').focus());
+    document.querySelectorAll('.filter').forEach((button) => button.addEventListener('click', () => {
+      activeFilter = button.dataset.filter;
+      document.querySelectorAll('.filter').forEach((item) => item.classList.toggle('active', item === button));
+      renderTasks();
+    }));
+    taskList.addEventListener('click', async (event) => {
+      const button = event.target.closest('[data-action]');
+      if (!button) return;
+      const card = button.closest('[data-id]');
+      const id = card.dataset.id;
+      const task = tasks.find((item) => String(item.id) === id);
+      try {
+        if (button.dataset.action === 'complete') {
+          const completedTask = await api(`/tasks/${id}/complete`, { method: 'PATCH' });
+          tasks = tasks.map((item) => item.id === completedTask.id ? completedTask : item);
+          renderTasks();
+          showToast('Task marked complete');
+        } else if (button.dataset.action === 'delete') {
+          if (!window.confirm(`Delete “${task.title}”?`)) return;
+          await api(`/tasks/${id}`, { method: 'DELETE' });
+          await loadTasks();
+          showToast('Task deleted');
+        } else if (button.dataset.action === 'edit') {
+          document.querySelector('#editId').value = id;
+          document.querySelector('#editTitle').value = task.title;
+          document.querySelector('#editDescription').value = task.description;
+          document.querySelector('#editBackdrop').classList.add('open');
+          document.querySelector('#editTitle').focus();
+        }
+      } catch (error) { showError(error.message); }
+    });
+    function closeEdit() { document.querySelector('#editBackdrop').classList.remove('open'); }
+    document.querySelector('#closeEdit').addEventListener('click', closeEdit);
+    document.querySelector('#cancelEdit').addEventListener('click', closeEdit);
+    document.querySelector('#editBackdrop').addEventListener('click', (event) => { if (event.target.id === 'editBackdrop') closeEdit(); });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeEdit(); });
+    document.querySelector('#editForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const id = document.querySelector('#editId').value;
+      try {
+        await api(`/tasks/${id}`, { method: 'PUT', body: JSON.stringify({ title: document.querySelector('#editTitle').value, description: document.querySelector('#editDescription').value }) });
+        closeEdit();
+        await loadTasks();
+        showToast('Changes saved');
+      } catch (error) { showError(error.message); }
+    });
+    loadTasks();
+  </script>
+</body>
+</html>
